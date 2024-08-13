@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <!-- MDBootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center">Login</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-outline mb-4">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+                        <label class="form-label" for="username">Username</label>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                        <label class="form-label" for="password">Password</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+                </form>
+                <p class="text-center">Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- MDBootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+</body>
+</html>

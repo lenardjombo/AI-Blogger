@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- MDBootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fafafa; 
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .navbar {
+            background-color: #ffffff; 
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .navbar-brand {
+            color: #262626;
+        }
+        .dashboard-container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            max-width: 90%; 
+            width: 900px; 
+            margin: 3rem auto;
+        }
+        .dashboard-container h2 {
+            margin-bottom: 1.5rem;
+            color: #262626;
+            font-size: 24px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-control {
+            width: 100%; 
+            padding: 0.75rem; 
+            font-size: 1rem; 
+        }
+        .btn-custom {
+            background-color: #0095f6; 
+            color: #ffffff;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #007bb5;
+        }
+        .btn-success {
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #388e3c;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .btn-copy {
+            background-color: #007bb5; 
+            color: #ffffff;
+            border: none;
+            margin-top: 1rem;
+        }
+        .btn-copy:hover {
+            background-color: #005f8d;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">AI Blogger</a>
+    </nav>
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="dashboard-container">
+            <h2>Content Generator</h2>
+            
+            <!-- YouTube Link Form -->
+            <form id="linkForm" method="POST" class="mb-4">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ link_form.as_p }}
+                </div>
+                <div class="text-center">
+                    <button type="button" id="generateButton" class="btn btn-custom">Generate Content</button>
+                </div>
+            </form>
+
+            <!-- Generated Content Area -->
+            <div class="form-group">
+                <textarea id="id_content" class="form-control" rows="10" readonly></textarea>
+            </div>
+
+            <!-- Copy Button -->
+            <div class="text-center">
+                <button type="button" id="copyButton" class="btn btn-copy">Copy Content</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MDBootstrap and jQuery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#generateButton').click(function() {
+                var youtubeLink = $('input[name="youtube_link"]').val();
+                $.ajax({
+                    url: '{% url "generate_content" %}', 
+                    type: 'POST',
+                    data: {
+                        'youtube_link': youtubeLink,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        $('#id_content').val(response.content);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            $('#copyButton').click(function() {
+                var content = $('#id_content').val();
+                navigator.clipboard.writeText(content).then(function() {
+                    alert('Content copied to clipboard!');
+                }).catch(function(err) {
+                    console.error('Failed to copy content: ', err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
