@@ -72,7 +72,9 @@ Requirements
 The requirements.txt file includes:
 
 Django==4.2.4
+
 youtube-transcript-api==0.6.0
+
 beautifulsoup4==4.12.2
 
 License
