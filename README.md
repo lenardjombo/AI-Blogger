@@ -68,7 +68,7 @@ Usage
 
 ![Screenshot from 2024-08-13 22-51-48](https://github.com/user-attachments/assets/7c5da12b-3b52-4d70-a41e-cdc66c7f578a)
 
-Requirements
+**Requirements**
 The requirements.txt file includes:
 
 Django==4.2.4
@@ -77,9 +77,9 @@ youtube-transcript-api==0.6.0
 
 beautifulsoup4==4.12.2
 
-License
+**License**
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Contributing
+**Contributing**
 If you want to contribute to this project, please fork the repository and create a pull request with your changes. Ensure that your code adheres to the project's coding standards and passes all tests.
 
